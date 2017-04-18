@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="cassandraAdminDataSource" class="org.apache.ignite.cache.store.cassandra.datasource.DataSource">
+        <property name="contactPoints" value="127.0.0.1"/>
+        <!--<property name="protocolVersion" value="4"/>-->
+        <property name="user" value="user"/>
+        <property name="password" value=""/>
+        <property name="readConsistency" value="ONE"/>
+        <property name="writeConsistency" value="ONE"/>
+    </bean>
+
+    <bean id="cassandraRegularDataSource" class="org.apache.ignite.cache.store.cassandra.datasource.DataSource">
+        <property name="contactPoints" value="127.0.0.1"/>
+        <!--<property name="protocolVersion" value="4"/>-->
+        <property name="user" value="user"/>
+        <property name="password" value=""/>
+        <property name="readConsistency" value="ONE"/>
+        <property name="writeConsistency" value="ONE"/>
+    </bean>
+</beans>

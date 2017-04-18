@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence keyspace="test1" table="pojo_test1">
+    <keyPersistence class="java.lang.String" strategy="PRIMITIVE" />
+    <valuePersistence class="org.runafter.ignite.example.CacheValue"
+                      strategy="POJO"
+                      serializer="org.apache.ignite.cache.store.cassandra.serializer.KryoSerializer">
+        <field name="firstKey" column="first_name" index="true"/>
+        <field name="secondKey" column="last_name" />
+        <field name="value" />
+    </valuePersistence>
+</persistence>

@@ -1,3 +1,5 @@
+package org.runafter.ignite.example;
+
 import org.apache.ignite.cache.query.QueryCursor;
 import org.apache.ignite.cache.query.ScanQuery;
 import org.apache.ignite.lang.IgniteBiPredicate;
@@ -5,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.cache.Cache;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 

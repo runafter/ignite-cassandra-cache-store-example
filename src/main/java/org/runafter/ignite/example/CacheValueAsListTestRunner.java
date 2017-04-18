@@ -1,3 +1,5 @@
+package org.runafter.ignite.example;
+
 import java.util.ArrayList;
 import java.util.List;
 
