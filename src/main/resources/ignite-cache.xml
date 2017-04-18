@@ -31,15 +31,46 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="ignite.cfg" class="org.apache.ignite.configuration.IgniteConfiguration">
-        <!--<property name="cacheConfiguration">-->
-            <!--<list>-->
-                <!--&lt;!&ndash; Partitioned cache example configuration (Atomic mode). &ndash;&gt;-->
-                <!--<bean class="org.apache.ignite.configuration.CacheConfiguration">-->
-                    <!--<property name="atomicityMode" value="ATOMIC"/>-->
-                    <!--<property name="backups" value="1"/>-->
-                <!--</bean>-->
-            <!--</list>-->
-        <!--</property>-->
+        <property name="cacheConfiguration">
+            <list>
+                <bean class="org.apache.ignite.configuration.CacheConfiguration">
+                    <property name="name" value="cacheIndexed"/>
+                    <!-- Configure query entities -->
+                    <!--<property name="indexedTypes">-->
+                    <!--</property>-->
+                    <property name="queryEntities">
+                        <list>
+                            <bean class="org.apache.ignite.cache.QueryEntity">
+                                <!-- Setting indexed type's key class -->
+                                <property name="keyType" value="java.lang.String"/>
+
+                                <!-- Setting indexed type's value class -->
+                                <property name="valueType"
+                                          value="CacheIndexQueryTestRunner.Value"/>
+
+                                <!-- Defining fields that will be either indexed or queryable.
+                                Indexed fields are added to 'indexes' list below.-->
+                                <property name="fields">
+                                    <map>
+                                        <entry key="firstKey" value="java.lang.Integer"/>
+                                    </map>
+                                </property>
+
+                                <!-- Defining indexed fields.-->
+                                <property name="indexes">
+                                    <list>
+                                        <!-- Single field (aka. column) index -->
+                                        <bean class="org.apache.ignite.cache.QueryIndex">
+                                            <constructor-arg value="firstKey"/>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
 
         <!-- Explicitly configure TCP discovery SPI to provide list of initial nodes. -->
         <property name="discoverySpi">
@@ -65,39 +96,5 @@
         </property>
     </bean>
 
-    <bean class="org.apache.ignite.configuration.CacheConfiguration">
-        <property name="name" value="cacheIndexed"/>
-        <!-- Configure query entities -->
-        <property name="queryEntities">
-            <list>
-                <bean class="org.apache.ignite.cache.QueryEntity">
-                    <!-- Setting indexed type's key class -->
-                    <property name="keyType" value="java.lang.String"/>
 
-                    <!-- Setting indexed type's value class -->
-                    <property name="valueType"
-                              value="CacheIndexQueryTestRunner.Value"/>
-
-                    <!-- Defining fields that will be either indexed or queryable.
-                    Indexed fields are added to 'indexes' list below.-->
-                    <property name="fields">
-                        <map>
-                            <entry key="firstKey" value="java.lang.Integer"/>
-                            <entry key="secondKey" value="java.lang.Integer"/>
-                        </map>
-                    </property>
-
-                    <!-- Defining indexed fields.-->
-                    <property name="indexes">
-                        <list>
-                            <!-- Single field (aka. column) index -->
-                            <bean class="org.apache.ignite.cache.QueryIndex">
-                                <constructor-arg value="firstKey"/>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
 </beans>
