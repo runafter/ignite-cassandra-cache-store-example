@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="cassandraAdminDataSource" class="org.apache.ignite.cache.store.cassandra.datasource.DataSource">
-        <property name="contactPoints" value="127.0.0.1"/>
+        <property name="contactPoints" value="192.168.1.226"/>
         <!--<property name="protocolVersion" value="4"/>-->
         <property name="user" value="user"/>
         <property name="password" value=""/>
@@ -15,7 +15,7 @@
     </bean>
 
     <bean id="cassandraRegularDataSource" class="org.apache.ignite.cache.store.cassandra.datasource.DataSource">
-        <property name="contactPoints" value="127.0.0.1"/>
+        <property name="contactPoints" value="192.168.1.226"/>
         <!--<property name="protocolVersion" value="4"/>-->
         <property name="user" value="user"/>
         <property name="password" value=""/>

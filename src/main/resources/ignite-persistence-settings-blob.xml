@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence keyspace="test1" table="blob_test1">
+    <keyPersistence class="java.lang.String" strategy="PRIMITIVE" />
+    <valuePersistence class="org.runafter.ignite.example.CacheValue"
+                      strategy="BLOB"
+                      serializer="org.apache.ignite.cache.store.cassandra.serializer.KryoSerializer">
+    </valuePersistence>
+</persistence>

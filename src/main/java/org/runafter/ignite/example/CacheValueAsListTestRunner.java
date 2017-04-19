@@ -7,10 +7,9 @@ import java.util.List;
  * Created by runaf on 2017-04-18.
  */
 public class CacheValueAsListTestRunner extends CacheTestRunner<String, List<String>> {
-    public CacheValueAsListTestRunner(int size, int itemSize) {
-        super("cacheValueAsList", size, itemSize);
+    public CacheValueAsListTestRunner(String cacheName, int size, int itemSize) {
+        super(cacheName == null? "cacheValueAsList" : cacheName, size, itemSize);
     }
-
     @Override
     protected int find(int k) {
         List<String> list = (List<String>)cache.get(keyOf(k));

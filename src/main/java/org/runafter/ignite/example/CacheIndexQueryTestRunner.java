@@ -17,9 +17,8 @@ import java.util.List;
 public class CacheIndexQueryTestRunner extends CacheTestRunner<String, CacheValue> {
     private SqlQuery<String, CacheValue> sql;
 
-    public CacheIndexQueryTestRunner(int size, int itemSize) {
-        super("cacheCassandraReadWriteThroughBehind", size, itemSize);
-//        super("cacheIndexed", size, itemSize);
+    public CacheIndexQueryTestRunner(String cacheName, int size, int itemSize) {
+        super(cacheName == null? "cacheCassandraReadWriteThrough" : cacheName, size, itemSize);
     }
 
     @Override
@@ -35,10 +34,10 @@ public class CacheIndexQueryTestRunner extends CacheTestRunner<String, CacheValu
         return list.size();
     }
 
-    protected void init() {
+    public void init() {
         ignite = Ignition.start("ignite-cache.xml");
         cache = ignite.cache(cacheName);
-        sql = new SqlQuery(CacheValue.class, "firstKey = ?");
+        sql = new SqlQuery<>(CacheValue.class, "firstKey = ?");
     }
 
     @Override

@@ -3,6 +3,8 @@ package org.runafter.ignite.example;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.IgniteCache;
 import org.apache.ignite.Ignition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +14,8 @@ import java.util.List;
  * Created by runaf on 2017-04-18.
  */
 public abstract class CacheTestRunner<K, V> {
+
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected final String cacheName;
     protected final int size;
@@ -24,21 +28,21 @@ public abstract class CacheTestRunner<K, V> {
         this.size = size;
         this.itemSize = itemSize;
     }
-    protected void init() {
+    public void init() {
         ignite = Ignition.start("ignite-cache.xml");
         cache = ignite.getOrCreateCache(cacheName);
     }
 
-    private void close() {
+    public void close() {
         ignite.close();
     }
     public void run() {
-        init();
-        System.out.println("start " + cacheName);
+        logger.debug("start {}", cacheName);
         long start = System.currentTimeMillis(), pe;
         for (int i = 0 ; i < size ; i++) {
             putItems(i);
-            System.out.println("cache put(" + i + ") " + (System.currentTimeMillis() - start) + " ms");
+            if (logger.isDebugEnabled())
+                logger.debug("cache put({}) {} ms", i, (System.currentTimeMillis() - start));
         }
         pe = System.currentTimeMillis() - start;
 
@@ -47,15 +51,13 @@ public abstract class CacheTestRunner<K, V> {
         int found;
         start = System.currentTimeMillis();
         for (Integer k : pool) {
-            s = System.currentTimeMillis();
             found = find(k);
-            System.out.println("finding " + found + " tooks " + (System.currentTimeMillis() - s) + " ms");
+            if (logger.isDebugEnabled())
+                logger.debug("cache find({}) {} ms : {}", k, (System.currentTimeMillis() - start), found);
         }
         fe = System.currentTimeMillis() - start;
 
-        System.out.println("end " + cacheName + " put: " + pe + " ms , get: " + fe + " ms \n");
-
-        close();
+        logger.info("{} put: {} ms , get: {} ms", cacheName, pe, fe);
     }
 
     protected abstract int find(int k);
